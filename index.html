@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P5 kelompok Jimlee</title>
+    <meta name="description" content="Website tentang Indonesia dan pentingnya kebhinekaan di masa kini.">
+    <meta name="keywords" content="Indonesia, kebhinekaan, budaya, wawancara, dokumentasi">
+    <meta name="author" content="Jimlee Hartono">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        header, footer {
+            background-color: #404641;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            width: 100px;
+            height: auto;
+            margin: 0 auto;
+        }
+        nav {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background-color: #404641;
+            width: 200px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000; /* Ensure nav is above other content */
+        }
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        main {
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+        .culture-section {
+            display: none;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .culture-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        form input, form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 6px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 4px;
+        }
+        form button {
+            background-color: #404641;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        form button:hover {
+            background-color: #404641;
+        }
+        .slider {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .slider img {
+            width: 100%;
+            display: none;
+            border-radius: 8px;
+        }
+        .slider img.active {
+            display: block;
+        }
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+            border-radius: 4px;
+        }
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+        .panel {
+            padding: 0 18px;
+            display: none;
+            background-color: white;
+            overflow: hidden;
+        }
+        .menu-toggle {
+            display: block;
+            cursor: pointer;
+            padding: 10px;
+            color: white;
+            font-size: 24px;
+        }
+        #menu-checkbox:checked ~ nav {
+            transform: translateX(0);
+        }
+        .video-thumbnail {
+            width: 100%;
+            max-width: 300px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            nav {
+                width: 100%;
+                top: 100px;
+            }
+            .header-content {
+                flex-direction: column;
+            }
+            .logo {
+                margin: 0;
+            }
+        }
+        nav a {
+            color: rgb(255, 255, 255);
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s, border-bottom 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        nav a:hover {
+            background-color: #ffffff;
+            color: black;
+            border-bottom: 5px solid rgb(255, 0, 0);
+         }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <label for="menu-checkbox" class="menu-toggle">☰</label>
+            <input type="checkbox" id="menu-checkbox" style="display: none;">
+            <nav>
+                <a href="#" onclick="closeMenu(); showSection('beranda')">Beranda</a>
+                <a href="#" onclick="closeMenu(); showSection('sekilas budaya')">Sekilas Tentang Indonesia</a>
+                <a href="#" onclick="closeMenu(); showSection('pentingnya kebhinekaan di masa kini')">Pentingnya Kebhinekaan di Masa Kini</a>
+                <a href="#" onclick="closeMenu(); showSection('wawancara')">Wawancara Dengan Murid</a>
+                <a href="#" onclick="closeMenu(); showSection('tentang kami')">Tentang Kami</a>
+                <a href="#" onclick="closeMenu(); showSection('kritik dan saran')">Kritik dan Saran</a>
+                <a href="#" onclick="closeMenu(); showSection('dokumentasi')">Dokumentasi</a>
+            </nav>
+            <a href="https://cintakasihtzuchi.sch.id/" target="_blank" aria-label="Visit our school website (opens in new tab)">
+                <img src="Gambar/Logo tzuchi.jpg" alt="Logo" class="logo">
+            </a>
+        </div>
+    </header>
+    <main>
+        <section id="beranda" class="culture-section" style="display: block;">
+            <div class="slider">
+                <img style="width: 400px; height: 200px;" src="Gambar/NAO wallpaper 2.jpeg" alt="Image 1" class="active">
+                <img style="width: 400px; height: 200px;"  src="Gambar/Konno Yuuki (SAO) 1.png" alt="Image 2">
+                <img style="width: 400px; height: 200px;"  src="Gambar/Park Hamin manhwa 1.png" alt="Image 3">
+            </div>
+            <h2>Beranda</h2>
+            <p>Selamat datang di Website kami, web ini dibuat dengan tujuan mengenalkan sekilas tentang Indonesia dan menjelaskan pentingnya memiliki kebhinekaan pada setiap individu di masa sekarang.</p>
+        </section>
+
+        <section id="sekilas budaya" class="culture-section">
+            <h2>Sekilas Tentang Indonesia</h2>
+            <p>Halaman ini menjelaskan Indonesia secara singkat, penjelasan dalam halaman ini mencakup Agama, dll</p>
+            <img src="kstgjm1.jpg" alt="Contoh gbr">
+            <h3>Agama</h3>
+            <h4>Pengantar: </h4>
+            <p>
+                Agama atau  Religi merupakan sistem yang mengatur kepercayaan seseorang kepada Tuhan.  Keyakinan ini membawa manusia untuk mencari kedekatan diri kepada Tuhan dengan cara menghambakan diri, yaitu menerima segala kepastian yang menimpa diri dan sekitarnya dan yakin berasal dari Tuhan; dan menaati segenap ketetapan, aturan, hukum, dan lain-lain yang diyakini berasal dari Tuhan. Agama memainkan peran yang sangat penting dalam masyarakat Indonesia dan kehidupan sehari-hari penduduknya.
+                Di Indonesia, istilah agama digunakan untuk menyebut enam agama yang diakui resmi oleh negara, seperti Islam, Katolik, Protestan, Hindu, Buddhisme, dan Konghucu. Sedangkan semua sistem keyakinan yang tidak atau belum diakui secara resmi disebut “religi”.
+            </p>
+            <p>
+                <b>Berikut adalah agama agama yang telah diakui di Indonesia:</b>
+                <br>
+                &#x2022; Islam: Agama mayoritas di Indonesia. Sekitar 87% dari populasi Indonesia menganut Islam, dan mayoritas dari mereka adalah Muslim Sunni. Ada juga komunitas Muslim Syiah dan Ahmadiyah 
+                di Indonesia, meskipun mereka menghadapi tantangan tertentu dalam hal pengakuan dan hak. 
+                <br>
+                &#x2022; Protestan: Kristen Protestan memiliki pengikut yang signifikan di berbagai wilayah, terutama di bagian timur Indonesia seperti Papua, serta di beberapa daerah di pulau-pulau lainnya.
+                <br>
+                &#x2022; Katolik: Katolik juga memiliki pengikut yang cukup besar di Indonesia, terutama di daerah-daerah seperti Flores, Timor, dan beberapa daerah di Sulawesi.
+                <br>               
+                &#x2022; Hindu: Agama Hindu terutama dianut oleh masyarakat di Bali dan beberapa bagian dari Jawa, serta di beberapa komunitas di pulau-pulau lainnya. Hindu Bali memiliki tradisi dan ritual yang sangat khas dan berbeda dari Hindu di India.
+                <br>
+                &#x2022; Buddha: Agama Buddha di Indonesia memiliki pengikut yang lebih kecil dibandingkan dengan agama-agama lain, tetapi komunitas Buddha tetap aktif, terutama di kota-kota besar dan di beberapa daerah seperti Sumatra Utara dan Jakarta.
+                <br>
+                &#x2022; Konghucu: Konghucu (Confucianisme) di Indonesia diakui secara resmi sebagai salah satu agama yang diakui negara. Meskipun jumlah pengikutnya kecil, Konghucu memiliki pengaruh dalam kehidupan budaya dan sosial di beberapa komunitas, terutama di kalangan etnis Tionghoa.
+            </p>
+        </section>
+
+        <section id="pentingnya kebhinekaan di masa kini" class="culture-section">
+            <h2>Pentingnya Kebhinekaan di Masa Kini</h2>
+            <img src="jimlee2.jpg" alt="Gambar 213">
+            <p>Jimlee.</p>
+        </section>
+
+        <section id="wawancara" class="culture-section">
+            <h2>Wawancara dengan Murid</h2>
+            <a href="https://www.youtube.com/watch?v=VIDEO_ID_1" target="_blank">
+                <img src="https://img.youtube.com/vi/VIDEO_ID_1/0.jpg" alt="Wawancara 1" class="video-thumbnail">
+            </a>
+            <a href="https://www.youtube.com/watch?v=VIDEO_ID_2" target="_blank">
+                <img src="https://img.youtube.com/vi/VIDEO_ID_2/0.jpg" alt="Wawancara 2" class="video-thumbnail">
+            </a>
+        </section>
+
+        <section id="tentang kami" class="culture-section">
+            <h2>Tentang Kami</h2>
+            <p>Jimlee</p>
+        </section>
+
+        <section id="kritik dan saran" class="culture-section">
+            <h2>Hubungi Kami</h2>
+            <form action="#" method="post" onsubmit="return validateForm()">
+                <input type="text" id="name" name="name" placeholder="Nama" required>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <textarea id="message" name="message" placeholder="Kritik dan saran" required></textarea>
+                <button type="submit">Kirim</button>
+            </form>
+        </section>
+
+        <section id="dokumentasi" class="culture-section">
+            <h2>Dokumentasi</h2>
+            <p>Jimlee.</p>
+            <p>P5 Pertemuan Kedua: Kamis, 1 Agustus 2024</p>
+            <img src="Gambar/Dokumentasi P5.jpg" alt="Dokumentasi P5-1">
+            <br><br>
+            <p>P5 Pertemuan Keempat: Kamis, 8 Agustus 2024</p>
+            <img src="Gambar/Dokumentasi P5 2.jpg" alt="Dokumentasi P5-2">
+            <br><br>
+            <p>P5 Pertemuan kelima: Selasa, 13 Agustus 2024</p>
+            <img src="Gambar/Dokumentasi P5 3.jpg" alt="Dokumentasi P5-3">
+            <br><br>
+            <p>P5 Pertemuan ke-</p>
+            <img src="Gambar/Dokumentasi P5 4.jpg" alt="Dokumentasi P5-4">
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 Jimlee Hartono. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.culture-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        function closeMenu() {
+            document.getElementById('menu-checkbox').checked = false;
+        }
+
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let i;
+            const slides = document.querySelectorAll(".slider img");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].classList.add("active");
+            setTimeout(showSlides, 2000);
+        }
+
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+
+        function validateForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (name.trim() === '' || email.trim() === '' || message.trim() === '') {
+                alert('Semua field harus diisi');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
