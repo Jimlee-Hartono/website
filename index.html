@@ -120,13 +120,10 @@
         </section>
 
         <section id="kritik dan saran" class="culture-section">
-            <h2>Hubungi Kami</h2>
-            <form action="#" method="post" onsubmit="return validateForm()">
-                <input type="text" id="name" name="name" placeholder="Nama" required>
-                <input type="email" id="email" name="email" placeholder="Email" required>
-                <textarea id="message" name="message" placeholder="Kritik dan saran" required></textarea>
-                <button type="submit">Kirim</button>
-            </form>
+            <h2>Kritik dan Saran</h2>
+            <textarea id="kritik" placeholder="Kritik dan Saran" rows="4" cols="50"></textarea>
+            <br>
+            <button onclick="sendEmail()">Kirim</button>
         </section>
 
         <section id="dokumentasi" class="culture-section">
@@ -191,16 +188,14 @@
             });
         }
 
-        function validateForm() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            if (name.trim() === '' || email.trim() === '' || message.trim() === '') {
-                alert('Semua field harus diisi');
-                return false;
-            }
-            return true;
+        function sendEmail() {
+            const kritik = document.getElementById("kritik").value;
+            const saran = document.getElementById("saran").value;
+            const subject = "Kritik dan Saran";
+            const body = `Kritik:\n${kritik}\n\nSaran:\n${saran}`;
+            const email = "jimleehartono@gmail.com"; // Replace with your email address
+            
+            window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
     </script>
 </body>
