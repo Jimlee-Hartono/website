@@ -233,24 +233,6 @@ Lebih lanjut, pemahaman dan penghargaan terhadap perbedaan dapat menjadi alat ya
             });
         }
 
-        async function sendEmail() {
-            const kritik = document.getElementById("kritik").value;
-            const saran = document.getElementById("saran").value;
-
-            const response = await fetch('https://jimlee-hartono.github.io/website/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ kritik, saran })
-            });
-
-            if (response.ok) {
-                alert('Email successfully sent!');
-            } else {
-                alert('Failed to send email.');
-            }
-        }
     </script>
 </body>
 </html>
